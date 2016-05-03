@@ -1,0 +1,17 @@
+{
+  "name": "rhubarbphp/module-leaf-crud",
+  "description": "Provides some patterns for CRUD application development.",
+  "keywords": [ "patterns", "rhubarb", "php", "framework" ],
+  "homepage": "http://www.rhubarbphp.com/",
+  "license": "Apache-2.0",
+  "autoload": {
+    "psr-4": {
+      "Rhubarb\\Leaf\\Crud": "src/"
+    }
+  },
+  "require": {
+    "rhubarbphp/rhubarb": "^1.1.0",
+    "rhubarbphp/module-stem": "^1.0.0",
+    "rhubarbphp/module-leaf": "1.x-dev",
+  }
+}
