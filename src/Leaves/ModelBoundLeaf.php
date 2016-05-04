@@ -25,6 +25,7 @@ use Rhubarb\Leaf\Controls\Common\Text\PasswordTextBox;
 use Rhubarb\Leaf\Controls\Common\Text\TextArea;
 use Rhubarb\Leaf\Controls\Common\Text\TextBox;
 use Rhubarb\Leaf\Leaves\Leaf;
+use Rhubarb\Stem\Collections\Collection;
 use Rhubarb\Stem\Models\Model;
 use Rhubarb\Stem\Repositories\MySql\Schema\Columns\MySqlEnumColumn;
 use Rhubarb\Stem\Schema\Columns\BooleanColumn;
@@ -53,6 +54,14 @@ abstract class ModelBoundLeaf extends Leaf
         $this->hasRestModelOrCollection = true;
         $this->initialiseView();
     }
+
+    public function setRestCollection(Collection $restCollection)
+    {
+        $this->model->restCollection = $restCollection;
+        $this->hasRestModelOrCollection = true;
+        $this->initialiseView();
+    }
+
 
     /**
      * Provides an opportunity for extending classes to modify the model in some way when they themselves are not

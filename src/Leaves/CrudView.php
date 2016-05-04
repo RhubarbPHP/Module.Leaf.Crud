@@ -65,8 +65,17 @@ class CrudView extends View
         }
     }
 
-    protected function getBindingValue($propertyName, $index = null)
+    protected function getBindingValueForSubLeaf($propertyName, $index = null)
     {
+        if ($this->model->restModel){
+            $columns = $this->model->restModel->getSchema()->getColumns();
+            if (!isset($columns[$propertyName])){
+                return parent::getBindingValueForSubLeaf($propertyName, $index);
+            }
+        } else {
+            return parent::getBindingValueForSubLeaf($propertyName, $index);
+        }
+
         if ($index !== null ){
             if (isset($this->model->restModel->$propertyName[$index])){
                 return $this->model->restModel->$propertyName[$index];
@@ -78,8 +87,19 @@ class CrudView extends View
         }
     }
 
-    protected function setBindingValue($propertyName, $propertyValue, $index = null)
+    protected function setBindingValueFromSubLeaf($propertyName, $propertyValue, $index = null)
     {
+        if ($this->model->restModel){
+            $columns = $this->model->restModel->getSchema()->getColumns();
+            if (!isset($columns[$propertyName])){
+                parent::setBindingValueFromSubLeaf($propertyName, $propertyValue, $index);
+                return;
+            }
+        } else {
+            parent::setBindingValueFromSubLeaf($propertyName, $propertyValue, $index);
+            return;
+        }
+
         if ($index !== null){
             if (!isset($this->model->restModel->$propertyName) || !is_array($this->model->restModel->$propertyName)){
                 $this->model->restModel->$propertyName = [];
