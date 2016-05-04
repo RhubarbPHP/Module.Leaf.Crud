@@ -18,7 +18,9 @@
 
 namespace Rhubarb\Leaf\Crud\Leaves;
 
+use Rhubarb\Crown\String\StringTools;
 use Rhubarb\Leaf\Controls\Common\Checkbox\Checkbox;
+use Rhubarb\Leaf\Controls\Common\SelectionControls\DropDown\DropDown;
 use Rhubarb\Leaf\Controls\Common\Text\PasswordTextBox;
 use Rhubarb\Leaf\Controls\Common\Text\TextArea;
 use Rhubarb\Leaf\Controls\Common\Text\TextBox;
@@ -98,17 +100,17 @@ abstract class ModelBoundLeaf extends Leaf
 
                 $collection = $relationship->getCollection();
 
-                //$dropDown = new DropDown($leafName, "");
-                //$dropDown->setSelectionItems(
-                //    [
-                //        ["", "Please Select"],
-                //        $collection
-                //    ]
-                //);
+                $dropDown = new DropDown($leafName, "");
+                $dropDown->setSelectionItems(
+                    [
+                        ["", "Please Select"],
+                        $collection
+                    ]
+                );
 
-                //$dropDown->setLabel(StringTools::wordifyStringByUpperCase($relationship->getNavigationPropertyName()));
+                $dropDown->setLabel(StringTools::wordifyStringByUpperCase($relationship->getNavigationPropertyName()));
 
-                //return $dropDown;
+                return $dropDown;
             }
 
             $columns = $schema->getColumns();
@@ -137,15 +139,15 @@ abstract class ModelBoundLeaf extends Leaf
 
             // Drop Downs
             if ($column instanceof MySqlEnumColumn) {
-                //$dropDown = new DropDown($leafName, $column->defaultValue);
-                //$dropDown->setSelectionItems(
-                //    [
-                //        ["", "Please Select"],
-                //        $column
-                //    ]
-                //);
+                $dropDown = new DropDown($leafName, $column->defaultValue);
+                $dropDown->setSelectionItems(
+                    [
+                        ["", "Please Select"],
+                        $column
+                    ]
+                );
 
-                //return $dropDown;
+                return $dropDown;
             }
 
             // TextArea
