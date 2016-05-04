@@ -100,11 +100,11 @@ class LeafRestUrlHandler extends ModelCollectionHandler
 
     protected function getLeafClassName()
     {
-        $mvpClass = false;
+        $leafClass = false;
 
         if ($this->urlAction != "") {
             if (isset($this->additionalPresenterClassNameMap[$this->urlAction])) {
-                $mvpClass = $this->additionalPresenterClassNameMap[$this->urlAction];
+                $leafClass = $this->additionalPresenterClassNameMap[$this->urlAction];
             } else {
                 if (is_numeric($this->urlAction)) {
                     $this->isCollection = false;
@@ -112,15 +112,15 @@ class LeafRestUrlHandler extends ModelCollectionHandler
             }
         }
 
-        if ($mvpClass === false) {
+        if ($leafClass === false) {
             if ($this->isCollection()) {
-                $mvpClass = $this->collectionPresenterClassName;
+                $leafClass = $this->collectionPresenterClassName;
             } else {
-                $mvpClass = $this->itemPresenterClassName;
+                $leafClass = $this->itemPresenterClassName;
             }
         }
 
-        return $mvpClass;
+        return $leafClass;
     }
 
     /**
@@ -131,30 +131,30 @@ class LeafRestUrlHandler extends ModelCollectionHandler
      */
     protected function generateResponseForRequest($request = null)
     {
-        $mvpClass = $this->getLeafClassName();
-        $mvp = new $mvpClass();
+        $leafClass = $this->getLeafClassName();
+        $leaf = new $leafClass();
 
         if ($this->isCollection()) {
-            if (method_exists($mvp, "setRestCollection")) {
+            if (method_exists($leaf, "setRestCollection")) {
                 try {
-                    call_user_func([$mvp, "setRestCollection"], $this->getModelCollection());
+                    call_user_func([$leaf, "setRestCollection"], $this->getModelCollection());
                 } catch (RestImplementationException $er) {
 
                 }
             }
         } else {
-            if (method_exists($mvp, "setRestModel")) {
+            if (method_exists($leaf, "setRestModel")) {
                 try {
-                    call_user_func([$mvp, "setRestModel"], $this->getModelObject());
+                    call_user_func([$leaf, "setRestModel"], $this->getModelObject());
                 } catch (RestImplementationException $er) {
                 }
             }
         }
 
-        $response = $mvp->generateResponse($request);
+        $response = $leaf->generateResponse($request);
 
         if (is_string($response)) {
-            $htmlResponse = new HtmlResponse($mvp);
+            $htmlResponse = new HtmlResponse($leaf);
             $htmlResponse->setContent($response);
             $response = $htmlResponse;
         }

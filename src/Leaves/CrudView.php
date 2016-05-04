@@ -3,6 +3,7 @@
 namespace Rhubarb\Leaf\Crud\Leaves;
 
 use Rhubarb\Crown\String\StringTools;
+use Rhubarb\Leaf\Controls\Common\Buttons\Button;
 use Rhubarb\Leaf\Views\View;
 use Rhubarb\Stem\Schema\SolutionSchema;
 
@@ -12,6 +13,26 @@ class CrudView extends View
      * @var CrudModel
      */
     protected $model;
+
+    /**
+     * The place where extending classes should create and register new Views
+     */
+    protected function createSubLeaves()
+    {
+        parent::createSubLeaves();
+
+        $this->registerSubLeaf(new Button("Save", "Save", function(){
+            $this->model->savePressedEvent->raise();
+        }));
+
+        $this->registerSubLeaf(new Button("Delete", "Delete", function(){
+            $this->model->deletePressedEvent->raise();
+        }));
+
+        $this->registerSubLeaf(new Button("Cancel", "Cancel", function(){
+            $this->model->cancelPressedEvent->raise();
+        }));
+    }
 
     protected function getTitle()
     {
@@ -41,6 +62,32 @@ class CrudView extends View
             } else {
                 return "Untitled";
             }
+        }
+    }
+
+    protected function getBindingValue($propertyName, $index = null)
+    {
+        if ($index !== null ){
+            if (isset($this->model->restModel->$propertyName[$index])){
+                return $this->model->restModel->$propertyName[$index];
+            } else {
+                return null;
+            }
+        } else {
+            return isset($this->model->restModel->$propertyName) ? $this->model->restModel->$propertyName : null;
+        }
+    }
+
+    protected function setBindingValue($propertyName, $propertyValue, $index = null)
+    {
+        if ($index !== null){
+            if (!isset($this->model->restModel->$propertyName) || !is_array($this->model->restModel->$propertyName)){
+                $this->model->restModel->$propertyName = [];
+            }
+
+            $this->model->restModel->$propertyName[$index] = $propertyValue;
+        } else {
+            $this->model->restModel->$propertyName = $propertyValue;
         }
     }
 }

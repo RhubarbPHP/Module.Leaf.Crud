@@ -46,7 +46,7 @@ abstract class CrudLeaf extends ModelBoundLeaf
         $this->redirectAfterSave();
     }
 
-    protected function createdModel()
+    protected function createModel()
     {
         $model = new CrudModel();
         $model->savePressedEvent->attachHandler(

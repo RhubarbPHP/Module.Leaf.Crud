@@ -24,7 +24,7 @@ class CrudModel extends ModelBoundModel
     public function __construct()
     {
         parent::__construct();
-
+        
         $this->savePressedEvent = new Event();
         $this->cancelPressedEvent = new Event();
         $this->deletePressedEvent = new Event();

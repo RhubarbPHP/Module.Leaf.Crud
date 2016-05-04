@@ -18,8 +18,23 @@
 
 namespace Rhubarb\Leaf\Crud\Leaves;
 
+use Rhubarb\Leaf\Controls\Common\Checkbox\Checkbox;
+use Rhubarb\Leaf\Controls\Common\Text\PasswordTextBox;
+use Rhubarb\Leaf\Controls\Common\Text\TextArea;
+use Rhubarb\Leaf\Controls\Common\Text\TextBox;
 use Rhubarb\Leaf\Leaves\Leaf;
 use Rhubarb\Stem\Models\Model;
+use Rhubarb\Stem\Repositories\MySql\Schema\Columns\MySqlEnumColumn;
+use Rhubarb\Stem\Schema\Columns\BooleanColumn;
+use Rhubarb\Stem\Schema\Columns\DateColumn;
+use Rhubarb\Stem\Schema\Columns\DateTimeColumn;
+use Rhubarb\Stem\Schema\Columns\DecimalColumn;
+use Rhubarb\Stem\Schema\Columns\IntegerColumn;
+use Rhubarb\Stem\Schema\Columns\LongStringColumn;
+use Rhubarb\Stem\Schema\Columns\MoneyColumn;
+use Rhubarb\Stem\Schema\Columns\StringColumn;
+use Rhubarb\Stem\Schema\Columns\TimeColumn;
+use Rhubarb\Stem\Schema\SolutionSchema;
 
 abstract class ModelBoundLeaf extends Leaf
 {
@@ -27,9 +42,147 @@ abstract class ModelBoundLeaf extends Leaf
      * @var ModelBoundModel
      */
     protected $model;
+
+    private $hasRestModelOrCollection = false;
     
     public function setRestModel(Model $restModel)
     {
         $this->model->restModel = $restModel;
+        $this->hasRestModelOrCollection = true;
+        $this->initialiseView();
+    }
+
+    /**
+     * Provides an opportunity for extending classes to modify the model in some way when they themselves are not
+     * directly responsible for the model creation.
+     */
+    protected function onModelCreated()
+    {
+        parent::onModelCreated();
+
+        $this->model->createSubLeafFromNameEvent->attachHandler(function($leafName){
+
+            if (!$this->hasRestModelOrCollection) {
+                return null;
+            }
+
+            $restModel = $this->model->restModel;
+
+            if ($restModel) {
+                $class = $restModel->getModelName();
+                $schema = $restModel->getSchema();
+            } else {
+                $restCollection = $this->model->restCollection;
+
+                $class = $restCollection->getModelClassName();
+                $schema = $restCollection->getModelSchema();
+            }
+
+            // See if the model has a relationship with this name.
+            $relationships = SolutionSchema::getAllOneToOneRelationshipsForModelBySourceColumnName($class);
+
+            $columnRelationships = false;
+
+            if (isset($relationships[$leafName])) {
+                $columnRelationships = $relationships[$leafName];
+            } else {
+                if ($leafName == $schema->uniqueIdentifierColumnName) {
+                    if (isset($relationships[""])) {
+                        $columnRelationships = $relationships[""];
+                    }
+                }
+            }
+
+            if ($columnRelationships) {
+                $relationship = $relationships[$leafName];
+
+                $collection = $relationship->getCollection();
+
+                //$dropDown = new DropDown($leafName, "");
+                //$dropDown->setSelectionItems(
+                //    [
+                //        ["", "Please Select"],
+                //        $collection
+                //    ]
+                //);
+
+                //$dropDown->setLabel(StringTools::wordifyStringByUpperCase($relationship->getNavigationPropertyName()));
+
+                //return $dropDown;
+            }
+
+            $columns = $schema->getColumns();
+
+            if (!isset($columns[$leafName])) {
+                return null;
+            }
+
+            $column = $columns[$leafName];
+
+            // Checkbox
+            if ($column instanceof BooleanColumn) {
+                return new Checkbox($leafName);
+            }
+
+            // Date
+            if ($column instanceof DateColumn || $column instanceof DateTimeColumn) {
+                //return new \Rhubarb\Leaf\Presenters\Controls\DateTime\Date($leafName);
+            }
+
+            // Time
+            if ($column instanceof TimeColumn) {
+                //$textBox = new \Rhubarb\Leaf\Presenters\Controls\DateTime\Time($leafName);
+                //return $textBox;
+            }
+
+            // Drop Downs
+            if ($column instanceof MySqlEnumColumn) {
+                //$dropDown = new DropDown($leafName, $column->defaultValue);
+                //$dropDown->setSelectionItems(
+                //    [
+                //        ["", "Please Select"],
+                //        $column
+                //    ]
+                //);
+
+                //return $dropDown;
+            }
+
+            // TextArea
+            if ($column instanceof LongStringColumn) {
+                $textArea = new TextArea($leafName, 5, 40);
+
+                return $textArea;
+            }
+
+            // TextBoxes
+            if ($column instanceof StringColumn) {
+                if (stripos($leafName, "password") !== false) {
+                    return new PasswordTextBox($leafName);
+                }
+
+                $textBox = new TextBox($leafName);
+                $textBox->setMaxLength($column->maximumLength);
+
+                return $textBox;
+            }
+
+            // Decimal
+            if ($column instanceof DecimalColumn || $column instanceof MoneyColumn) {
+                //$textBox = new NumericTextBox($leafName, 5);
+
+                //return $textBox;
+            }
+
+            // Int
+            if ($column instanceof IntegerColumn) {
+                $textBox = new TextBox($leafName);
+                //$textBox->setSize(5);
+
+                return $textBox;
+            }
+
+            return null;
+        });
     }
 }
