@@ -21,6 +21,7 @@ namespace Rhubarb\Leaf\Crud\Leaves;
 use Rhubarb\Crown\String\StringTools;
 use Rhubarb\Leaf\Controls\Common\Checkbox\Checkbox;
 use Rhubarb\Leaf\Controls\Common\SelectionControls\DropDown\DropDown;
+use Rhubarb\Leaf\Controls\Common\Text\NumericTextBox;
 use Rhubarb\Leaf\Controls\Common\Text\PasswordTextBox;
 use Rhubarb\Leaf\Controls\Common\Text\TextArea;
 use Rhubarb\Leaf\Controls\Common\Text\TextBox;
@@ -180,9 +181,9 @@ abstract class ModelBoundLeaf extends Leaf
 
             // Decimal
             if ($column instanceof DecimalColumn || $column instanceof MoneyColumn) {
-                //$textBox = new NumericTextBox($leafName, 5);
+                $textBox = new NumericTextBox($leafName);
 
-                //return $textBox;
+                return $textBox;
             }
 
             // Int
