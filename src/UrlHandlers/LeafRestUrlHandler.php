@@ -30,7 +30,7 @@ class LeafRestUrlHandler extends ModelCollectionHandler
 {
     protected $collectionPresenterClassName;
     protected $itemPresenterClassName;
-    protected $additionalPresenterClassNameMap = [];
+    protected $additionalLeafClassNameMap = [];
     protected $urlAction = "";
 
     /**
@@ -51,7 +51,7 @@ class LeafRestUrlHandler extends ModelCollectionHandler
 
         $this->collectionPresenterClassName = $collectionPresenterClassName;
         $this->itemPresenterClassName = $itemPresenterClassName;
-        $this->additionalPresenterClassNameMap = $additionalPresenterClassNameMap;
+        $this->additionalLeafClassNameMap = $additionalPresenterClassNameMap;
     }
 
     /**
@@ -87,7 +87,7 @@ class LeafRestUrlHandler extends ModelCollectionHandler
         $parentResponse = parent::getMatchingUrlFragment($request, $currentUrlFragment);
 
         if (preg_match("|^" . $this->url . "([^/]+)/|", $uri, $match)) {
-            if (is_numeric($match[1]) || isset($this->additionalPresenterClassNameMap[$match[1]])) {
+            if (is_numeric($match[1]) || isset($this->additionalLeafClassNameMap[$match[1]])) {
                 $this->urlAction = $match[1];
                 $this->isCollection = false;
 
@@ -103,8 +103,8 @@ class LeafRestUrlHandler extends ModelCollectionHandler
         $leafClass = false;
 
         if ($this->urlAction != "") {
-            if (isset($this->additionalPresenterClassNameMap[$this->urlAction])) {
-                $leafClass = $this->additionalPresenterClassNameMap[$this->urlAction];
+            if (isset($this->additionalLeafClassNameMap[$this->urlAction])) {
+                $leafClass = $this->additionalLeafClassNameMap[$this->urlAction];
             } else {
                 if (is_numeric($this->urlAction)) {
                     $this->isCollection = false;

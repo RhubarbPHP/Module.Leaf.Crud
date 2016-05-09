@@ -85,7 +85,7 @@ class CrudUrlHandler extends LeafRestUrlHandler
             // that a presenter class is waiting for us...
 
             $mvpClass = $this->namespaceBase . "\\" . $this->leafClassStub .
-                $this->makeActionClassFriendly($this->urlAction) . "Presenter";
+                $this->makeActionClassFriendly($this->urlAction);
 
             if (class_exists($mvpClass)) {
                 return $mvpClass;
@@ -97,12 +97,12 @@ class CrudUrlHandler extends LeafRestUrlHandler
 
     private function checkForPotentialAction($actionName)
     {
-        if (isset($this->additionalPresenterClassNameMap[$actionName])) {
+        if (isset($this->additionalLeafClassNameMap[$actionName])) {
             return true;
         }
 
         $potentialClassName = $this->namespaceBase . "\\" . $this->leafClassStub .
-            $this->makeActionClassFriendly($actionName) . "Presenter";
+            $this->makeActionClassFriendly($actionName);
 
         return class_exists($potentialClassName);
     }
