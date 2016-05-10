@@ -20,6 +20,7 @@ namespace Rhubarb\Leaf\Crud\Leaves;
 
 use Rhubarb\Crown\String\StringTools;
 use Rhubarb\Leaf\Controls\Common\Checkbox\Checkbox;
+use Rhubarb\Leaf\Controls\Common\DateTime\Date;
 use Rhubarb\Leaf\Controls\Common\SelectionControls\DropDown\DropDown;
 use Rhubarb\Leaf\Controls\Common\Text\NumericTextBox;
 use Rhubarb\Leaf\Controls\Common\Text\PasswordTextBox;
@@ -138,7 +139,7 @@ abstract class ModelBoundLeaf extends Leaf
 
             // Date
             if ($column instanceof DateColumn || $column instanceof DateTimeColumn) {
-                //return new \Rhubarb\Leaf\Presenters\Controls\DateTime\Date($leafName);
+                return new Date($leafName);
             }
 
             // Time
