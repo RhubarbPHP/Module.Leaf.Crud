@@ -31,6 +31,7 @@ use Rhubarb\Stem\Collections\Collection;
 use Rhubarb\Stem\Models\Model;
 use Rhubarb\Stem\Repositories\MySql\Schema\Columns\MySqlEnumColumn;
 use Rhubarb\Stem\Schema\Columns\BooleanColumn;
+use Rhubarb\Stem\Schema\Columns\Column;
 use Rhubarb\Stem\Schema\Columns\DateColumn;
 use Rhubarb\Stem\Schema\Columns\DateTimeColumn;
 use Rhubarb\Stem\Schema\Columns\DecimalColumn;
@@ -91,6 +92,12 @@ abstract class ModelBoundLeaf extends Leaf
                 $schema = $restCollection->getModelSchema();
             }
 
+            $leaf = $this->createLeafForLeafName($leafName);
+
+            if ($leaf){
+                return $leaf;
+            }
+
             // See if the model has a relationship with this name.
             $relationships = SolutionSchema::getAllOneToOneRelationshipsForModelBySourceColumnName($class);
 
@@ -132,70 +139,80 @@ abstract class ModelBoundLeaf extends Leaf
 
             $column = $columns[$leafName];
 
-            // Checkbox
-            if ($column instanceof BooleanColumn) {
-                return new Checkbox($leafName);
-            }
-
-            // Date
-            if ($column instanceof DateColumn || $column instanceof DateTimeColumn) {
-                return new Date($leafName);
-            }
-
-            // Time
-            if ($column instanceof TimeColumn) {
-                //$textBox = new \Rhubarb\Leaf\Presenters\Controls\DateTime\Time($leafName);
-                //return $textBox;
-            }
-
-            // Drop Downs
-            if ($column instanceof MySqlEnumColumn) {
-                $dropDown = new DropDown($leafName, $column->defaultValue);
-                $dropDown->setSelectionItems(
-                    [
-                        ["", "Please Select"],
-                        $column
-                    ]
-                );
-
-                return $dropDown;
-            }
-
-            // TextArea
-            if ($column instanceof LongStringColumn) {
-                $textArea = new TextArea($leafName, 5, 40);
-
-                return $textArea;
-            }
-
-            // TextBoxes
-            if ($column instanceof StringColumn) {
-                if (stripos($leafName, "password") !== false) {
-                    return new PasswordTextBox($leafName);
-                }
-
-                $textBox = new TextBox($leafName);
-                $textBox->setMaxLength($column->maximumLength);
-
-                return $textBox;
-            }
-
-            // Decimal
-            if ($column instanceof DecimalColumn || $column instanceof MoneyColumn) {
-                $textBox = new NumericTextBox($leafName);
-
-                return $textBox;
-            }
-
-            // Int
-            if ($column instanceof IntegerColumn) {
-                $textBox = new TextBox($leafName);
-                //$textBox->setSize(5);
-
-                return $textBox;
-            }
-
-            return null;
+            return $this->createLeafFromColumn($column, $leafName);
         });
+    }
+
+    protected function createLeafForLeafName($leafName)
+    {
+        return null;
+    }
+
+    protected function createLeafFromColumn(Column $column, $leafName)
+    {
+        // Checkbox
+        if ($column instanceof BooleanColumn) {
+            return new Checkbox($leafName);
+        }
+
+        // Date
+        if ($column instanceof DateColumn || $column instanceof DateTimeColumn) {
+            return new Date($leafName);
+        }
+
+        // Time
+        if ($column instanceof TimeColumn) {
+            //$textBox = new \Rhubarb\Leaf\Presenters\Controls\DateTime\Time($leafName);
+            //return $textBox;
+        }
+
+        // Drop Downs
+        if ($column instanceof MySqlEnumColumn) {
+            $dropDown = new DropDown($leafName, $column->defaultValue);
+            $dropDown->setSelectionItems(
+                [
+                    ["", "Please Select"],
+                    $column
+                ]
+            );
+
+            return $dropDown;
+        }
+
+        // TextArea
+        if ($column instanceof LongStringColumn) {
+            $textArea = new TextArea($leafName, 5, 40);
+
+            return $textArea;
+        }
+
+        // TextBoxes
+        if ($column instanceof StringColumn) {
+            if (stripos($leafName, "password") !== false) {
+                return new PasswordTextBox($leafName);
+            }
+
+            $textBox = new TextBox($leafName);
+            $textBox->setMaxLength($column->maximumLength);
+
+            return $textBox;
+        }
+
+        // Decimal
+        if ($column instanceof DecimalColumn || $column instanceof MoneyColumn) {
+            $textBox = new NumericTextBox($leafName);
+
+            return $textBox;
+        }
+
+        // Int
+        if ($column instanceof IntegerColumn) {
+            $textBox = new TextBox($leafName);
+            //$textBox->setSize(5);
+
+            return $textBox;
+        }
+
+        return null;
     }
 }
