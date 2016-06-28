@@ -25,7 +25,7 @@ abstract class CrudLeaf extends ModelBoundLeaf
     protected function saveRestModel()
     {
         $this->model->restModel->save();
-        
+
         return $this->model->restModel;
     }
 
@@ -48,24 +48,30 @@ abstract class CrudLeaf extends ModelBoundLeaf
 
     protected function createModel()
     {
-        $model = new CrudModel();
-        $model->savePressedEvent->attachHandler(
+        return new CrudModel();
+
+    }
+
+    protected function onModelCreated()
+    {
+        parent::onModelCreated();
+
+        $this->model->savePressedEvent->attachHandler(
             function () {
                 $this->save();
             }
         );
 
-        $model->cancelPressedEvent->attachHandler(
+        $this->model->cancelPressedEvent->attachHandler(
             function () {
                 $this->cancel();
             }
         );
 
-        $model->deletePressedEvent->attachHandler(
+        $this->model->deletePressedEvent->attachHandler(
             function () {
                 $this->delete();
             }
         );
-        return $model;
     }
 }
