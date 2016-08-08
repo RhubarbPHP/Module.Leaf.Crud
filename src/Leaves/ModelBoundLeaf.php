@@ -48,9 +48,17 @@ abstract class ModelBoundLeaf extends Leaf
      * @var ModelBoundModel
      */
     protected $model;
+    private $incomingRestModel;
 
     private $hasRestModelOrCollection = false;
-    
+
+    public function __construct($modelOrCollection = null)
+    {
+        $this->incomingRestModel = $modelOrCollection;
+
+        parent::__construct("");
+    }
+
     public function setRestModel(Model $restModel)
     {
         $this->model->restModel = $restModel;
@@ -73,6 +81,12 @@ abstract class ModelBoundLeaf extends Leaf
     protected function onModelCreated()
     {
         parent::onModelCreated();
+
+        if ($this->incomingRestModel instanceof Model){
+            $this->setRestModel($this->incomingRestModel);
+        } elseif ($this->incomingRestModel instanceof Collection){
+            $this->setRestCollection($this->incomingRestModel);
+        }
 
         $this->model->createSubLeafFromNameEvent->attachHandler(function($leafName){
 

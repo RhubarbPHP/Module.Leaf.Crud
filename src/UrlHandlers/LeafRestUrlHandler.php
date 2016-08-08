@@ -132,23 +132,11 @@ class LeafRestUrlHandler extends ModelCollectionHandler
     protected function generateResponseForRequest($request = null)
     {
         $leafClass = $this->getLeafClassName();
-        $leaf = new $leafClass();
 
         if ($this->isCollection()) {
-            if (method_exists($leaf, "setRestCollection")) {
-                try {
-                    call_user_func([$leaf, "setRestCollection"], $this->getModelCollection());
-                } catch (RestImplementationException $er) {
-
-                }
-            }
+            $leaf = new $leafClass($this->getModelCollection());
         } else {
-            if (method_exists($leaf, "setRestModel")) {
-                try {
-                    call_user_func([$leaf, "setRestModel"], $this->getModelObject());
-                } catch (RestImplementationException $er) {
-                }
-            }
+            $leaf = new $leafClass($this->getModelObject());
         }
 
         $response = $leaf->generateResponse($request);
