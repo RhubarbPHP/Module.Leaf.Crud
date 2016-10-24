@@ -71,6 +71,23 @@ class LeafRestUrlHandler extends ModelCollectionHandler
         return $mime;
     }
 
+    private function checkForPotentialAction($actionName)
+    {
+        if (isset($this->additionalLeafClassNameMap[$actionName])) {
+            return true;
+        }
+
+        $potentialClassName = $this->namespaceBase . "\\" . $this->leafClassStub .
+            $this->makeActionClassFriendly($actionName);
+
+        return class_exists($potentialClassName);
+    }
+
+    private function makeActionClassFriendly($action)
+    {
+        return str_replace(" ", "", ucwords(strtolower(str_replace("-", " ", $action))));
+    }
+
     /**
      * Should be implemented to return a true or false as to whether this handler supports the given request.
      *
@@ -85,6 +102,15 @@ class LeafRestUrlHandler extends ModelCollectionHandler
         $uri = $currentUrlFragment;
 
         $parentResponse = parent::getMatchingUrlFragment($request, $currentUrlFragment);
+
+        if (preg_match('|^' . $this->url . '([0-9]+)/([a-zA-Z0-9\-]+)|', $uri, $matches)) {
+            if ($this->checkForPotentialAction($matches[2])) {
+                $this->urlAction = $matches[2];
+                $this->isCollection = false;
+
+                return $matches[0];
+            }
+        }
 
         if (preg_match("|^" . $this->url . "([^/]+)/|", $uri, $match)) {
             if (is_numeric($match[1]) || isset($this->additionalLeafClassNameMap[$match[1]])) {
