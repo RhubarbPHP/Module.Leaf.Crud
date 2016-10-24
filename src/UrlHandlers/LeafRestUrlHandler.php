@@ -71,7 +71,7 @@ class LeafRestUrlHandler extends ModelCollectionHandler
         return $mime;
     }
 
-    private function checkForPotentialAction($actionName)
+    protected function checkForPotentialAction($actionName)
     {
         if (isset($this->additionalLeafClassNameMap[$actionName])) {
             return true;
@@ -83,7 +83,7 @@ class LeafRestUrlHandler extends ModelCollectionHandler
         return class_exists($potentialClassName);
     }
 
-    private function makeActionClassFriendly($action)
+    protected function makeActionClassFriendly($action)
     {
         return str_replace(" ", "", ucwords(strtolower(str_replace("-", " ", $action))));
     }
