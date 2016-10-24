@@ -1,5 +1,7 @@
 # Changelog
 
+### 1.0.x
+
 ### 1.0.2
 
 Fixed:		Fix for additional class map on LeafRestUrlHandler not working
