@@ -77,10 +77,7 @@ class LeafRestUrlHandler extends ModelCollectionHandler
             return true;
         }
 
-        $potentialClassName = $this->namespaceBase . "\\" . $this->leafClassStub .
-            $this->makeActionClassFriendly($actionName);
-
-        return class_exists($potentialClassName);
+        return false;
     }
 
     protected function makeActionClassFriendly($action)
