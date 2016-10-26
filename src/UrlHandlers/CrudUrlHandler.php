@@ -140,4 +140,16 @@ class CrudUrlHandler extends LeafRestUrlHandler
 
         return $parentResponse;
     }
+
+    protected function checkForPotentialAction($actionName)
+    {
+        if (isset($this->additionalLeafClassNameMap[$actionName])) {
+            return true;
+        }
+
+        $potentialClassName = $this->namespaceBase . "\\" . $this->leafClassStub .
+            $this->makeActionClassFriendly($actionName);
+
+        return class_exists($potentialClassName);
+    }
 }

@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.0.3
+
+Fixed:		New bug introduced in 1.0.2 with LeafRestUrlHandler not having access to namespaceBase field
+
 ### 1.0.2
 
 Fixed:		Fix for additional class map on LeafRestUrlHandler not working
