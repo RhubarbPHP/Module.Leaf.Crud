@@ -195,7 +195,7 @@ abstract class ModelBoundLeaf extends Leaf
 
         // TextArea
         if ($column instanceof LongStringColumn) {
-            $textArea = new TextArea($leafName, 5, 40);
+            $textArea = new TextArea($leafName);
 
             return $textArea;
         }
