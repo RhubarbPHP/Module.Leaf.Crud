@@ -132,7 +132,7 @@ abstract class ModelBoundLeaf extends Leaf
 
                 $collection = $relationship->getCollection();
 
-                $dropDown = new DropDown($leafName, "");
+                $dropDown = new DropDown($leafName);
                 $dropDown->setSelectionItems(
                     [
                         ["", "Please Select"],
@@ -182,7 +182,7 @@ abstract class ModelBoundLeaf extends Leaf
 
         // Drop Downs
         if ($column instanceof MySqlEnumColumn) {
-            $dropDown = new DropDown($leafName, $column->defaultValue);
+            $dropDown = new DropDown($leafName);
             $dropDown->setSelectionItems(
                 [
                     ["", "Please Select"],
