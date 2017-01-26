@@ -63,16 +63,13 @@ abstract class ModelBoundLeaf extends Leaf
     {
         $this->model->restModel = $restModel;
         $this->hasRestModelOrCollection = true;
-        $this->initialiseView();
     }
 
     public function setRestCollection(Collection $restCollection)
     {
         $this->model->restCollection = $restCollection;
         $this->hasRestModelOrCollection = true;
-        $this->initialiseView();
     }
-
 
     /**
      * Provides an opportunity for extending classes to modify the model in some way when they themselves are not
