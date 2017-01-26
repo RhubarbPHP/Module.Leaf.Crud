@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.0.5
+
+Fixed:		View being unnecessarily instantiated early by setRestModel/setRestCollection
+
 ### 1.0.4
 
 Fixed:		Bug with controls constructed with removed 2nd argument (became an error with Leaf 1.3)
