@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.0.6
+
+Changed:    Using DateTime control for DateTime columns
+
 ### 1.0.5
 
 Fixed:		View being unnecessarily instantiated early by setRestModel/setRestCollection
