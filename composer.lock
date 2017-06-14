@@ -269,16 +269,16 @@
         },
         {
             "name": "rhubarbphp/module-leaf-common-controls",
-            "version": "1.0.31",
+            "version": "1.0.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RhubarbPHP/Module.Leaf.CommonControls.git",
-                "reference": "807155db8e73bbadd06640d2bff871ff2f02af00"
+                "reference": "cf0975159e2455f405379c8b01fa28f7a58e5661"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RhubarbPHP/Module.Leaf.CommonControls/zipball/807155db8e73bbadd06640d2bff871ff2f02af00",
-                "reference": "807155db8e73bbadd06640d2bff871ff2f02af00",
+                "url": "https://api.github.com/repos/RhubarbPHP/Module.Leaf.CommonControls/zipball/cf0975159e2455f405379c8b01fa28f7a58e5661",
+                "reference": "cf0975159e2455f405379c8b01fa28f7a58e5661",
                 "shasum": ""
             },
             "require": {
@@ -304,7 +304,7 @@
                 "presenter",
                 "rhubarb"
             ],
-            "time": "2017-06-14 15:21:45"
+            "time": "2017-06-14 15:47:34"
         },
         {
             "name": "rhubarbphp/module-stem",
@@ -360,16 +360,16 @@
         },
         {
             "name": "rhubarbphp/rhubarb",
-            "version": "1.3.10",
+            "version": "1.3.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RhubarbPHP/Rhubarb.git",
-                "reference": "a0710902c2c6b6125f1d15eec4f535d05a61d2e0"
+                "reference": "aa6ca99ec417e9ea3c5b710ff3c7232f6b7289b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RhubarbPHP/Rhubarb/zipball/a0710902c2c6b6125f1d15eec4f535d05a61d2e0",
-                "reference": "a0710902c2c6b6125f1d15eec4f535d05a61d2e0",
+                "url": "https://api.github.com/repos/RhubarbPHP/Rhubarb/zipball/aa6ca99ec417e9ea3c5b710ff3c7232f6b7289b1",
+                "reference": "aa6ca99ec417e9ea3c5b710ff3c7232f6b7289b1",
                 "shasum": ""
             },
             "require": {
@@ -404,7 +404,7 @@
                 "framework",
                 "php"
             ],
-            "time": "2017-06-02 11:33:11"
+            "time": "2017-06-14 15:40:38"
         },
         {
             "name": "symfony/console",

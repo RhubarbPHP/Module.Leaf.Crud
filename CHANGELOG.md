@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.0.7
+
+Fixed:      Column Control Ordering bug
+
 ### 1.0.6
 
 Changed:    Using DateTime control for DateTime columns

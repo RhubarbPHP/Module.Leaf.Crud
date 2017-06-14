@@ -167,13 +167,14 @@ abstract class ModelBoundLeaf extends Leaf
             return new Checkbox($leafName);
         }
 
+        // DateTime
+        if($column instanceof DateTimeColumn) {
+            return new DateTime($leafName);
+        }
+
         // Date
         if ($column instanceof DateColumn) {
             return new Date($leafName);
-        }
-
-        if($column instanceof DateTimeColumn) {
-            return new DateTime($leafName);
         }
 
         // Time
