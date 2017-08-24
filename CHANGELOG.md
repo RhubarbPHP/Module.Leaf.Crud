@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.0.8
+
+Added:	    New custard command for making Crud leaves
+
 ### 1.0.7
 
 Fixed:      Column Control Ordering bug
