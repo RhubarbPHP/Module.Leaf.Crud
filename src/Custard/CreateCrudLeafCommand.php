@@ -22,7 +22,7 @@ class CreateCrudLeafCommand extends CreateLeafCommand
 		$generateViewbridge = $input->getOption('viewbridge') != null;
 
 		if (sizeof($name) == 0) {
-			$name = $this->askQuestion("Enter the name for the Leaf class", "", true);
+			$name = $this->askQuestion("Enter the name of the Model you want to CRUD", "", true);
 		} else {
 			$name = $name[0];
 		}
