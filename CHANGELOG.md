@@ -1,8 +1,12 @@
 # Changelog
 
-### 1.0.9
+### 1.0.10
 
 Added: Supported closures along with class names.
+
+### 1.0.9
+
+Added: Correct Class name
 
 ### 1.0.8
 
