@@ -159,7 +159,11 @@ class LeafRestUrlHandler extends ModelCollectionHandler
         if ($this->isCollection()) {
             $leaf = new $leafClass($this->getModelCollection());
         } else {
-            $leaf = new $leafClass($this->getModelObject());
+            if (is_callable($leafClass)){
+                $leaf = $leafClass($this, $this->getModelObject());
+            } else {
+                $leaf = new $leafClass($this->getModelObject());
+            }
         }
 
         $response = $leaf->generateResponse($request);
