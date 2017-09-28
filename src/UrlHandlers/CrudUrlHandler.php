@@ -29,17 +29,17 @@ class CrudUrlHandler extends LeafRestUrlHandler
 
     private $leafClassStub;
 
-    public function __construct($modelName, $namespaceBase, $additionalPresenterClassNameMap = [], $childUrlHandlers = [], $prefix)
+    public function __construct($modelName, $namespaceBase, $additionalPresenterClassNameMap = [], $childUrlHandlers = [], $prefix = null)
     {
         $namespaceBase = rtrim($namespaceBase, "\\");
         $this->namespaceBase = $namespaceBase;
 
-        // Get the parent folder which will become our collection presenter
-        $parts = explode("/", str_replace("\\", "/", $namespaceBase));
-
         if (isset($prefix)) {
             $this->leafClassStub = $prefix;
         } else {
+            // Get the parent folder which will become our collection presenter
+            $parts = explode("/", str_replace("\\", "/", $namespaceBase));
+
             $this->leafClassStub = $parts[ sizeof($parts) - 1 ];
         }
 
