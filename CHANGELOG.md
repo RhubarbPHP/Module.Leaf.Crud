@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.0.11
+
+Added: Allow a prefix to be set during construction of CrudUrlHandler to be used as leafClassStub 
+
+
 ### 1.0.10
 
 Added: Supported closures along with class names.

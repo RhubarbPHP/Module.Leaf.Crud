@@ -25,19 +25,23 @@ use Rhubarb\Stem\UrlHandlers\ModelCollectionHandler;
 
 class CrudUrlHandler extends LeafRestUrlHandler
 {
-    private $namespaceBase;
+    protected $namespaceBase;
 
-    private $leafClassStub;
+    protected $leafClassStub;
 
-    public function __construct($modelName, $namespaceBase, $additionalPresenterClassNameMap = [], $childUrlHandlers = [])
+    public function __construct($modelName, $namespaceBase, $additionalPresenterClassNameMap = [], $childUrlHandlers = [], $prefix = null)
     {
         $namespaceBase = rtrim($namespaceBase, "\\");
         $this->namespaceBase = $namespaceBase;
 
-        // Get the parent folder which will become our collection presenter
-        $parts = explode("/", str_replace("\\", "/", $namespaceBase));
+        if (isset($prefix)) {
+            $this->leafClassStub = $prefix;
+        } else {
+            // Get the parent folder which will become our collection presenter
+            $parts = explode("/", str_replace("\\", "/", $namespaceBase));
 
-        $this->leafClassStub = $parts[sizeof($parts) - 1];
+            $this->leafClassStub = $parts[ sizeof($parts) - 1 ];
+        }
 
         parent::__construct(
             $modelName,
