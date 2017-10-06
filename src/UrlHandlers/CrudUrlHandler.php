@@ -25,9 +25,9 @@ use Rhubarb\Stem\UrlHandlers\ModelCollectionHandler;
 
 class CrudUrlHandler extends LeafRestUrlHandler
 {
-    private $namespaceBase;
+    protected $namespaceBase;
 
-    private $leafClassStub;
+    protected $leafClassStub;
 
     public function __construct($modelName, $namespaceBase, $additionalPresenterClassNameMap = [], $childUrlHandlers = [], $prefix = null)
     {
