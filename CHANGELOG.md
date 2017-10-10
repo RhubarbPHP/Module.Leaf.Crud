@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.1.0
+
+Added: "Generic" leaves for quick starting crud based projects
+
 ### 1.0.11
 
 Added: Allow a prefix to be set during construction of CrudUrlHandler to be used as leafClassStub 
