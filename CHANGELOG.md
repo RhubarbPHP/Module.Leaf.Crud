@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.1.1
+
+Fixed: Corrected case issue in GenericCollectionView
+
 ### 1.1.0
 
 Added: "Generic" leaves for quick starting crud based projects
