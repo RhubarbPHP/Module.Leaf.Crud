@@ -35,7 +35,6 @@ abstract class GenericItemView extends CrudView
     {
         $htmlPageSettings = HtmlPageSettings::singleton();
 
-        $delete = $this->model->restModel->isNewRecord() ? '' : $this->leaves['Delete'];
         print <<<HTML
         <main class="c-main">
             {$this->getHeaderBarHTML()}
@@ -46,13 +45,11 @@ HTML;
 
         $this->printInputs();
 
+        $this->printActionButtons();
+
         print <<<HTML
-                <div class="u-pad-top-bottom o-flex">
-                    <div class="o-flex__item">{$this->leaves['Save']}{$this->leaves['Cancel']}</div>
-                    <div>{$delete}</div>
-                </div>
-            </div>
-        </main>
+        </div>
+    </main>
 HTML;
     }
 
@@ -132,5 +129,37 @@ HTML;
         $settings->pageTitle = $this->model->restModel->isNewRecord()
             ? 'New ' . $this->getModelDisplayName()
             : $this->model->restModel->getLabel();
+    }
+
+    protected function getActionButtons()
+    {
+        $buttons = [
+            'Save',
+            'Cancel'
+        ];
+        if (!$this->model->restModel->isNewRecord()) {
+            $buttons[] = 'Delete';
+        }
+        return $buttons;
+    }
+
+    protected function printActionButtons()
+    {
+        if ($this->model->displayActionButtons) {
+            $buttons = $this->getActionButtons();
+            if (sizeof($buttons) > 0) {
+                print <<<HTML
+            <div class="u-pad-top-bottom o-flex">
+                    <div class="o-flex__item">
+HTML;
+                foreach ($buttons as $actionButton) {
+                    print $this->leaves[$actionButton];
+                }
+                print <<<HTML
+                </div>
+            </div>
+HTML;
+            }
+        }
     }
 }
