@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.1.2
+
+Changed: css classes for header are now changeable
+
 ### 1.1.1
 
 Fixed: Corrected case issue in GenericCollectionView
