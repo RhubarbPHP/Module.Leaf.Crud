@@ -1,5 +1,13 @@
 # Changelog
 
+### 1.1.3
+
+Added: Flags in GenericCrudModel to hide buttons and header on GenericItemView
+
+### 1.1.2
+
+Changed: css classes for header are now changeable
+
 ### 1.1.2
 
 Added: `printActionButtons()` method within GenericCollectionView, to allow for the buttons to be hidden if required - using the `$displayActionButtons` property of the GenericCrudModel.
