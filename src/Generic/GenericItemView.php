@@ -35,24 +35,40 @@ abstract class GenericItemView extends CrudView
     {
         $htmlPageSettings = HtmlPageSettings::singleton();
 
-        $delete = $this->model->restModel->isNewRecord() ? '' : $this->leaves['Delete'];
         print <<<HTML
         <main class="c-main">
-            {$this->getHeaderBarHTML()}
-            <div class="u-pad o-wrap">
+HTML;
+        if($this->model->showHeader) {
+            $this->getHeaderBarHTML();
+        }
+        print <<<HTML
+            <div
+} class="u-pad o-wrap">
                 <h1 class="u-epsilon c-heading">{$htmlPageSettings->pageTitle}</h1>
                 
 HTML;
 
         $this->printInputs();
 
+        if($this->model->showButtonBar)
+        {
+            $this->printButtonBar();
+        }
+
         print <<<HTML
-                <div class="u-pad-top-bottom o-flex">
+            </div>
+        </main>
+HTML;
+    }
+
+    protected function printButtonBar()
+    {
+        $delete = $this->model->restModel->isNewRecord() ? '' : $this->leaves['Delete'];
+        print <<<HTML
+        <div class="u-pad-top-bottom o-flex">
                     <div class="o-flex__item">{$this->leaves['Save']}{$this->leaves['Cancel']}</div>
                     <div>{$delete}</div>
                 </div>
-            </div>
-        </main>
 HTML;
     }
 
