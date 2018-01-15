@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.1.3
+
+Added: Flags in GenericCrudModel to hide buttons and header on GenericItemView
+
 ### 1.1.2
 
 Changed: css classes for header are now changeable
