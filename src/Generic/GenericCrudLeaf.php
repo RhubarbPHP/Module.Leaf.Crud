@@ -14,14 +14,6 @@ abstract class GenericCrudLeaf extends CrudLeaf
     /** @var GenericCrudModel */
     protected $model;
 
-    protected $displayActionButtons;
-
-    public function __construct($modelOrCollection = null, $displayActionButtons = true)
-    {
-        parent::__construct($modelOrCollection);
-        $this->displayActionButtons = $displayActionButtons;
-    }
-
     protected function redirectAfterSave()
     {
         if (count($this->model->errors) === 0) {
@@ -46,11 +38,4 @@ abstract class GenericCrudLeaf extends CrudLeaf
     {
         return new GenericCrudModel();
     }
-
-    protected function onModelCreated()
-    {
-        parent::onModelCreated();
-        $this->model->displayActionButtons = $this->displayActionButtons;
-    }
-
 }

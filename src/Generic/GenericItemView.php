@@ -149,36 +149,4 @@ HTML;
             ? 'New ' . $this->getModelDisplayName()
             : $this->model->restModel->getLabel();
     }
-
-    protected function getActionButtons()
-    {
-        $buttons = [
-            'Save',
-            'Cancel'
-        ];
-        if (!$this->model->restModel->isNewRecord()) {
-            $buttons[] = 'Delete';
-        }
-        return $buttons;
-    }
-
-    protected function printActionButtons()
-    {
-        if ($this->model->displayActionButtons) {
-            $buttons = $this->getActionButtons();
-            if (sizeof($buttons) > 0) {
-                print <<<HTML
-            <div class="u-pad-top-bottom o-flex">
-                    <div class="o-flex__item">
-HTML;
-                foreach ($buttons as $actionButton) {
-                    print $this->leaves[$actionButton];
-                }
-                print <<<HTML
-                </div>
-            </div>
-HTML;
-            }
-        }
-    }
 }

@@ -6,13 +6,19 @@ use Rhubarb\Crown\Settings\HtmlPageSettings;
 
 trait PageHeaderBar
 {
+    protected function getHeaderBarClasses()
+    {
+        return ['o-flex', 'o-flex--align-middle', 'u-border-bottom', 'u-pad', 'u-marg-bottom'];
+    }
+
     /**
      * @return string
      */
     final protected function getHeaderBarHTML()
     {
+        $classes = implode(' ', $this->getHeaderBarClasses());
         return <<<HTML
-            <div class="o-flex o-flex--align-middle u-border-bottom u-pad u-marg-bottom">
+            <div class="{$classes}">
                 <div class="c-breadcrumb">
                     {$this->generateBreadcrumbDOM()}
                 </div>
