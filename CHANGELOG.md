@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.1.4
+
+Fixed: Removed additional div tags from GenericCollectionView.
+
 ### 1.1.3
 
 Added: Flags in GenericCrudModel to hide buttons and header on GenericItemView

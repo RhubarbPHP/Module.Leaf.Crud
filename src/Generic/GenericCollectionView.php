@@ -86,8 +86,6 @@ HTML;
                     </div>
                 </div>
             </main>
-        </div>
-    </div>
 HTML;
     }
 
