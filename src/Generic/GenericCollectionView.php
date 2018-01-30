@@ -5,14 +5,24 @@ namespace Rhubarb\Leaf\Crud\Generic;
 use Rhubarb\Crown\Settings\HtmlPageSettings;
 use Rhubarb\Crown\String\StringTools;
 use Rhubarb\Leaf\Crud\Leaves\CrudView;
+use Rhubarb\Leaf\SearchPanel\Leaves\SearchPanel;
 use Rhubarb\Leaf\Table\Leaves\Table;
+use Rhubarb\Leaf\Tabs\Leaves\Tabs;
 use Rhubarb\Stem\Schema\SolutionSchema;
 
 abstract class GenericCollectionView extends CrudView
 {
     use URLRestrictedAccess, PageHeaderBar;
 
+    /**
+     * @var SearchPanel
+     */
     protected $search;
+
+    /**
+     * @var Tabs
+     */
+    protected $tabs;
 
     protected function createSubLeaves()
     {
@@ -29,6 +39,16 @@ abstract class GenericCollectionView extends CrudView
         if ($this->search !== null) {
             $this->registerSubLeaf($this->search);
             $table->bindEventsWith($this->search);
+        }
+
+        $this->tabs = $this->createTabs();
+        if ($this->tabs !== null) {
+            $this->registerSubLeaf($this->tabs);
+            $table->bindEventsWith($this->tabs);
+
+            if ($this->search) {
+                $this->search->bindEventsWith($this->tabs);
+            }
         }
 
         parent::createSubLeaves();
@@ -78,6 +98,10 @@ HTML;
         if (isset($this->search)) {
             print $this->search;
         }
+
+        if (isset($this->tabs)) {
+            print $this->tabs;
+        }
         print <<<HTML
                             <span class="u-marg-left">{$this->generateTopButtonsDOM()}</span>
                             </div>
@@ -99,6 +123,14 @@ HTML;
      * @return null
      */
     protected function createSearch()
+    {
+        return null;
+    }
+
+    /**
+     * @return null
+     */
+    protected function createTabs()
     {
         return null;
     }
