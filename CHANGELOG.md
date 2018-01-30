@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.1.5
+
+Added:  Support for tabs to Generic Collections
+
 ### 1.1.4
 
 Fixed: Removed additional div tags from GenericCollectionView.
