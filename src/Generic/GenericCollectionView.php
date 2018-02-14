@@ -27,7 +27,7 @@ abstract class GenericCollectionView extends CrudView
     protected function createSubLeaves()
     {
         $this->registerSubLeaf(
-            $table = new Table($this->getTableCollection(), 20)
+            $table = $this->createTable()
         );
         $table->setExportColumns($this->getExportColumns());
         $table->columns = $this->getDisplayColumns();
@@ -43,12 +43,13 @@ abstract class GenericCollectionView extends CrudView
 
         $this->tabs = $this->createTabs();
         if ($this->tabs !== null) {
-            $this->registerSubLeaf($this->tabs);
-            $table->bindEventsWith($this->tabs);
 
             if ($this->search) {
                 $this->search->bindEventsWith($this->tabs);
             }
+
+            $this->registerSubLeaf($this->tabs);
+            $table->bindEventsWith($this->tabs);
         }
 
         parent::createSubLeaves();
@@ -179,5 +180,13 @@ HTML;
     {
         $idColumn = $this->model->restCollection->getModelSchema()->uniqueIdentifierColumnName;
         return '<a href="{' . $idColumn . '}/">Edit</a>';
+    }
+
+    /**
+     * @return Table
+     */
+    protected function createTable()
+    {
+        return new Table($this->getTableCollection(), 20);
     }
 }
