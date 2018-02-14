@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.1.6
+
+Added:  Support for creating the whole table bespokely 
+
 ### 1.1.5
 
 Added:  Support for tabs to Generic Collections
