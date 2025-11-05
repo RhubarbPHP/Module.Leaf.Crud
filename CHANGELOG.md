@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.1.7
+
+Fixed: Fix method signatures for UrlHandler abstract method implementation
+
 ### 1.1.6
 
 Added:  Support for creating the whole table bespokely 
