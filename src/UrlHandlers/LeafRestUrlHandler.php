@@ -152,7 +152,7 @@ class LeafRestUrlHandler extends ModelCollectionHandler
      * @param mixed $request
      * @return bool
      */
-    protected function generateResponseForRequest($request = null)
+    protected function generateResponseForRequest($request = null, $currentUrlFragment = "")
     {
         $leafClass = $this->getLeafClassName();
 
